@@ -1,2 +1,2 @@
 # querydano
-An opensource UI for querying the Cardano Blockchain.
+An opensource interface for querying the Cardano blockchain.
