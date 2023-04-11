@@ -2,7 +2,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: green;
+    background-color: black;
     top: 0;
     left: 0;
     z-index: -1;
@@ -24,4 +24,18 @@
     z-index: 1;
     color: white;
     font-size: 100px;
+}
+
+.header {
+    display: flex;
+    padding-left: 50px;
+    padding-top: 30px;
+}
+
+#ascii-logo {
+    font-family: VT323;
+    z-index: 1;
+    color: white;
+    font-size: 6px;
+    padding-right: 30px;
 }
