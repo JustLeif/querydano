@@ -1,6 +1,7 @@
 use std::{process::Command};
 use serde::{Deserialize, Serialize};
 use actix_web::{get, web, App, HttpServer, Responder, HttpResponse};
+use actix_cors::Cors;
 
 // JSON Response Structs.
 #[derive(Serialize, Deserialize, Debug)]
@@ -69,6 +70,7 @@ async fn get_utxo_of_address(params: web::Path<GetUtxoAddressParams>) -> impl Re
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
+            .wrap(Cors::permissive())
             .service(get_tip)
             .service(get_utxo_of_address)
     })
