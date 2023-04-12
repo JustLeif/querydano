@@ -1,0 +1,9 @@
+.command-line {
+    display: flex;
+    flex-direction: row;
+}
+
+input {
+    all: unset;
+    width: 100%;
+}

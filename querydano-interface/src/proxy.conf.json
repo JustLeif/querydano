@@ -1,0 +1,6 @@
+{
+    "/api": {
+        "target": "http://localhost:5796/tip",
+        "secure": false
+    }
+}

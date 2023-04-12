@@ -1,0 +1,5 @@
+<div class="command-line">
+    <div style="color: #ff5ee4;">query</div>
+    <div style="color: #45fc42;">&nbsp;$&nbsp;</div>
+    <input ngModel #primaryInput class="query-input" (blur)="refocus()" (keyup.enter)="query($event)">
+</div>

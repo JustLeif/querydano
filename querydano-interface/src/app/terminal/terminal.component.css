@@ -17,19 +17,22 @@
     background: url("../../assets/fuzz.png") repeat;
     opacity: 60%;
     z-index: 0;
+    pointer-events: none;
 }
 
+/* Used by all text structures. */
 #text {
     font-family: VT323;
     z-index: 1;
     color: white;
-    font-size: 100px;
+    font-size: 45px;
+    padding-left: 50px;
 }
 
 .header {
     display: flex;
-    padding-left: 50px;
     padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 #ascii-logo {
