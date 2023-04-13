@@ -12,7 +12,7 @@ export class TerminalComponent implements OnInit {
   @ViewChild(DynamicChildLoaderDirective, { static: true })
   dynamicChild!: DynamicChildLoaderDirective;
 
-  ref: ComponentRef<InputLineComponent>;
+  componentRefs: ComponentRef<InputLineComponent>[] = [];
 
   constructor() { }
 
@@ -23,10 +23,22 @@ export class TerminalComponent implements OnInit {
   }
 
   generateNewInputLine() {
-    this.ref = this.dynamicChild.viewContainerRef.createComponent(InputLineComponent);
-    this.ref.instance.completed.subscribe(() => {
-      this.generateNewInputLine();
+    const componentRef = this.dynamicChild.viewContainerRef.createComponent(InputLineComponent);
+    this.componentRefs.push(componentRef);
+    const sub = componentRef.instance.event.subscribe((event) => {
+      sub.unsubscribe();
+      if(event === `completed`) this.generateNewInputLine();
+      if(event === `clear`) this.destroyComponents();
     });
   }
+
+  destroyComponents() {
+    this.componentRefs.forEach(ref => {
+      ref.destroy();
+    });
+    this.generateNewInputLine();
+  }
+
+
 
 }

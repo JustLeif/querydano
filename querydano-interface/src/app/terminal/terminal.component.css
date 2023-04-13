@@ -42,3 +42,17 @@
     font-size: 6px;
     padding-right: 30px;
 }
+
+.querydano-animation {
+    overflow: hidden;
+    width: 0;
+    animation: typing;
+    animation-duration: 3s;
+    animation-timing-function: steps(21, end);
+    animation-fill-mode: forwards;
+}
+
+@keyframes typing {
+    from {width: 0}
+    to {width: 100%}
+}
