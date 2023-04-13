@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output } from '@angular/core';
 import { QueryService } from '../services/query.service';
 import { catchError } from 'rxjs';
+import { EventEmitter } from '@angular/core';
 
 type State = `active` | `querying` | `error` |`complete`;
+
+
 
 @Component({
   selector: 'input-line',
@@ -14,10 +17,15 @@ export class InputLineComponent implements OnInit {
   @ViewChild("primaryInput") inputField: ElementRef;
   state: State;
 
+  @Output() completed = new EventEmitter();
+
+  queryResult: string = ``;
+  queryInput: string = ``;
+
   constructor(private queryService: QueryService) { }
 
   ngOnInit(): void { 
-    this.state = 'active';
+    this.state = `active`;
   }
 
   ngAfterViewInit() {
@@ -25,22 +33,30 @@ export class InputLineComponent implements OnInit {
   }
 
   refocus() {
-    if(this.state === 'active') {
+    if(this.state === `active`) {
       this.inputField.nativeElement.focus();
     }
   }
 
   query(event: any) {
+    this.queryInput = event.target.value;
     this.state = `querying`;
-    console.log(event.target.value);
 
     if(event.target.value.toLowerCase() === `tip`) {
       this.queryService.tip()
-        .pipe(catchError(() => this.state = 'error'))
+        .pipe(catchError(() => this.state = `error`))
         .subscribe(tip => {
-          console.log(tip);
+          this.queryResult = JSON.stringify(tip);
+          this.state = `complete`;
       });
-    } 
+    }
+
+    this.completed.emit('completed');
+    
+  }
+
+  parseCommand(input: string) {
+
   }
 
 }
