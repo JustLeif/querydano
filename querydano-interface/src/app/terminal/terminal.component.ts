@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
+import { InputLineComponent } from '../input-line/input-line.component';
+import { DynamicChildLoaderDirective } from '../directives/dynamic-child-loader.directive';
 
 @Component({
   selector: 'terminal',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TerminalComponent implements OnInit {
 
+  @ViewChild(DynamicChildLoaderDirective, { static: true })
+  dynamicChild!: DynamicChildLoaderDirective;
+
+  ref: ComponentRef<InputLineComponent>;
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  ngAfterViewInit() {
+    this.generateNewInputLine()
+  }
+
+  generateNewInputLine() {
+    this.ref = this.dynamicChild.viewContainerRef.createComponent(InputLineComponent);
+    this.ref.instance.completed.subscribe(() => {
+      this.generateNewInputLine();
+    });
   }
 
 }

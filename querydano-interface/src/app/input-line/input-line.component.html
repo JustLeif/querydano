@@ -1,5 +1,24 @@
-<div class="command-line">
+<div class="command-line" *ngIf="this.state !== 'complete'">
     <div style="color: #ff5ee4;">query</div>
+    <div class="sign" style="color: #45fc42;">&nbsp;&nbsp;$&nbsp;</div>
+    <input ngModel #primaryInput class="column" (blur)="refocus()" (keyup.enter)="query($event)">
+</div>
+<div class="command-line" *ngIf="this.state === 'complete'">
+    <div style="color: #ff5ee4;">query</div>
+    <div style="color: #45fc42;">&nbsp;&nbsp;$&nbsp;</div>
+    <div>{{ this.queryInput }}</div>
+</div>
+
+<div *ngIf="this.state === 'error'">
+    <div style="color: #ff0000;">error</div>
+    <div>Unknown command</div>
+</div>
+
+<div *ngIf="this.state === 'querying'">
+    <div style="color: #eeb006;">.....</div>
+</div>
+<div class ="command-line" *ngIf="this.state === 'complete'">
+    <div style="color: #eeb006;">result</div>
     <div style="color: #45fc42;">&nbsp;$&nbsp;</div>
-    <input ngModel #primaryInput class="query-input" (blur)="refocus()" (keyup.enter)="query($event)">
+    <div>{{ this.queryResult }}</div>
 </div>
