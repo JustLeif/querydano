@@ -7,6 +7,8 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { InputLineComponent } from './input-line/input-line.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DynamicChildLoaderDirective } from './directives/dynamic-child-loader.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { DynamicChildLoaderDirective } from './directives/dynamic-child-loader.d
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ScrollingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
