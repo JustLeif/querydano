@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, OnDestroy } from '@angular/core';
 import { QueryService } from '../services/query.service';
-import { Subject, catchError, takeUntil, takeWhile } from 'rxjs';
+import { Subject, catchError, takeUntil } from 'rxjs';
 import { EventEmitter } from '@angular/core';
+import { Tip, Tx } from '../data/json.data';
 
 type State = `active` | `querying` | `error` |`complete`;
 
@@ -22,7 +23,7 @@ export class InputLineComponent implements OnInit {
 
   @Output() event = new EventEmitter();
 
-  queryResult: string = ``;
+  queryResult: any;
   queryInput: string = ``;
   safeSub$ = new Subject();
 
@@ -55,18 +56,26 @@ export class InputLineComponent implements OnInit {
       this.queryService.tip()
         .pipe(catchError(() => this.state = `error`), takeUntil(this.safeSub$))
         .subscribe(tip => {
-          this.queryResult = JSON.stringify(tip);
+          this.queryResult = tip as Tip;
+          this.complete();
         })
+    }
+    if(command.command === `utxo`) {
+      this.queryService.utxo(command.args ? command.args[0] : `no address`)
+      .pipe(catchError(() => this.state = `error`), takeUntil(this.safeSub$))
+      .subscribe(txArray => {
+        this.queryResult = txArray as Tx[];
+        this.complete();
+      })
     }
     if(command.command === `clear`) {
       this.event.emit(`clear`);
+      this.complete();
     }
     if(command.command === `unknown`) {
       this.queryResult = `Unknown command '${command.args ? command.args[0] : null}'`;
+      this.complete();
     }
-
-    this.state = `complete`;
-    this.event.emit('completed');
   }
 
   parseCommand(input: string): Command {
@@ -74,7 +83,13 @@ export class InputLineComponent implements OnInit {
 
     if(parsedInput[0] === `tip`) return { command: `tip`};
     else if(parsedInput[0] === `clear`) return { command: `clear`};
+    else if(parsedInput[0] === `utxo`) return { command: `utxo`, args: [parsedInput[1]]};
     else return {command: `unknown`, args: [parsedInput[0]]};
+  }
+
+  complete() {
+    this.state = `complete`;
+    this.event.emit('completed');
   }
 
 }
