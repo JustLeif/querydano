@@ -56,7 +56,7 @@ export class InputLineComponent implements OnInit {
       this.queryService.tip()
         .pipe(catchError(() => this.state = `error`), takeUntil(this.safeSub$))
         .subscribe(tip => {
-          this.queryResult = tip as Tip;
+          this.queryResult = JSON.stringify((tip as Tip), null, 2);
           this.complete();
         })
     }
@@ -64,7 +64,7 @@ export class InputLineComponent implements OnInit {
       this.queryService.utxo(command.args ? command.args[0] : `no address`)
       .pipe(catchError(() => this.state = `error`), takeUntil(this.safeSub$))
       .subscribe(txArray => {
-        this.queryResult = txArray as Tx[];
+        this.queryResult = JSON.stringify((txArray as Tx[]), null, 2);
         this.complete();
       })
     }
