@@ -5,10 +5,11 @@
     background-color: black;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: 0;
 }
 
 #fuzz {
+    pointer-events: none;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -16,8 +17,7 @@
     left: 0;
     background: url("../../assets/fuzz.png") repeat;
     opacity: 60%;
-    z-index: 0;
-    pointer-events: none;
+    z-index: 1;
 }
 
 /* Used by all text structures. */
@@ -55,4 +55,10 @@
 @keyframes typing {
     from {width: 0}
     to {width: 100%}
+}
+
+.scrollable {
+    width: 100%;
+    height: 900px;
+    overflow-y: auto;
 }
