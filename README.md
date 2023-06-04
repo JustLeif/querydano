@@ -2,7 +2,8 @@
 v0.1.0
 
 ### Purpose
-This project is an interface for querying the Cardano Blockchain. The following is a demonstration of how the interface can be used.
+- This project is an interface for querying the Cardano Blockchain. The following is a demonstration of how the interface can be used.
+- Built as a portfolio project, this software demonstrates my ability to build Webapps, build a Rust RESTapi, and work with the Cardano CLI tools to interact and query the blockchain.
 
 Video Link: https://youtu.be/4zWg6jcsjVg
 ![thumbnail](https://user-images.githubusercontent.com/69766831/232885458-a0075ac2-a32b-431b-aca3-2d5d6407bcae.png)
